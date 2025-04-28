@@ -220,19 +220,39 @@
     <string name="batch_authorization">批量授权</string>
     <string name="batch_cancel_authorization">批量取消授权</string>
     <string name="color_yellow">黄色</string>
-    <string name="kpm">内核模块</string>
-    <string name="kpm_title">内核模块</string>
-    <string name="kpm_empty">暂无已安装的内核模块</string>
-    <string name="kpm_version">版本</string>
-    <string name="kpm_author">作者</string>
-    <string name="kpm_execute">执行</string>
-    <string name="kpm_uninstall">卸载</string>
-    <string name="kpm_uninstall_confirm">确定要卸载内核模块 %1$s 吗？</string>
-    <string name="kpm_uninstall_success">卸载成功</string>
-    <string name="kpm_uninstall_failed">卸载失败</string>
-    <string name="kpm_install">安装kpm模块</string>
-    <string name="kpm_install_confirm">确认安装吗？</string>
-    <string name="kpm_install_success">安装kpm模块成功</string>
-    <string name="kpm_install_failed">安装kpm模块失败</string>
+    <string name="image_editor_hint">使用双指缩放图片，单指拖动调整位置</string>
     <string name="more_settings_simplicity_mode">简洁模式</string>
+    <string name="reprovision">重置</string>
+    <!-- Anykernel3 Kernel刷写进度相关 -->
+    <string name="horizon_flash_title">刷写Kernel</string>
+    <string name="horizon_logs_label">日志:</string>
+    <string name="horizon_flash_complete">刷写完成</string>
+    <string name="horizon_kernel_summary">刷入 Anykernel3 内核</string>
+    <!-- 刷写状态相关 -->
+    <string name="horizon_preparing">准备中…</string>
+    <string name="horizon_cleaning_files">清理文件…</string>
+    <string name="horizon_copying_files">复制文件…</string>
+    <string name="horizon_extracting_tool">提取刷写工具…</string>
+    <string name="horizon_patching_script">修补刷写脚本…</string>
+    <string name="horizon_flashing">刷写内核中…</string>
+    <string name="horizon_flash_complete_status">刷写完成</string>
+    <!-- 槽位选择相关字符串 -->
+    <string name="select_slot_title">选择刷写槽位</string>
+    <string name="select_slot_description">请选择要刷写boot的目标槽位</string>
+    <string name="slot_a">A槽位</string>
+    <string name="slot_b">B槽位</string>
+    <string name="selected_slot">已选择槽位: %1$s</string>
+    <string name="horizon_getting_original_slot">获取原有槽位</string>
+    <string name="horizon_setting_target_slot">设置指定槽位</string>
+    <string name="horizon_restoring_original_slot">恢复默认槽位</string>
+    <string name="current_slot">当前槽位：%1$s </string>
+    <!-- 错误信息 -->
+    <string name="horizon_copy_failed">复制失败</string>
+    <string name="horizon_unknown_error">未知错误</string>
+    <string name="flash_failed_message">刷写失败</string>
+    <!-- lkm/gki install -->
+    <string name="Lkm_install_methods">LKM修补/安装</string>
+    <string name="GKI_install_methods">GKI安装</string>
+    <string name="kernel_version_log">内核版本：%1$s</string>
+    <string name="tool_version_log">使用修补工具：%1$s</string>
 </resources>

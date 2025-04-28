@@ -395,6 +395,7 @@ fun MoreSettingsScreen(navigator: DestinationsNavigator) {
                                 CardConfig.cardElevation = CardConfig.defaultElevation
                                 CardConfig.cardAlpha = 0.45f
                                 CardConfig.isCustomAlphaSet = false
+                                CardConfig.isCustomBackgroundEnabled = false
                                 saveCardConfig(context)
                                 cardAlpha = 0.35f
                                 themeMode = 0
@@ -407,45 +408,45 @@ fun MoreSettingsScreen(navigator: DestinationsNavigator) {
                     )
                 }
             )
-                // 透明度 Slider
-                AnimatedVisibility(
-                    visible = ThemeConfig.customBackgroundUri != null && showCardSettings,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-                ) {
-                    ListItem(
-                        leadingContent = { Icon(Icons.Filled.Opacity, null) },
-                        headlineContent = { Text(stringResource(R.string.settings_card_alpha)) },
-                        supportingContent = {
-                            Slider(
-                                value = cardAlpha,
-                                onValueChange = { newValue ->
-                                    cardAlpha = newValue
-                                    CardConfig.cardAlpha = newValue
-                                    CardConfig.isCustomAlphaSet = true
-                                    prefs.edit { putBoolean("is_custom_alpha_set", true) }
-                                    prefs.edit { putFloat("card_alpha", newValue) }
-                                },
-                                onValueChangeFinished = {
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        saveCardConfig(context)
-                                    }
-                                },
-                                valueRange = 0f..1f,
-                                colors = getSliderColors(cardAlpha, useCustomColors = true),
-                                thumb = {
-                                    SliderDefaults.Thumb(
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        thumbSize = DpSize(0.dp, 0.dp)
-                                    )
+            // 透明度 Slider
+            AnimatedVisibility(
+                visible = ThemeConfig.customBackgroundUri != null && showCardSettings,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+            ) {
+                ListItem(
+                    leadingContent = { Icon(Icons.Filled.Opacity, null) },
+                    headlineContent = { Text(stringResource(R.string.settings_card_alpha)) },
+                    supportingContent = {
+                        Slider(
+                            value = cardAlpha,
+                            onValueChange = { newValue ->
+                                cardAlpha = newValue
+                                CardConfig.cardAlpha = newValue
+                                CardConfig.isCustomAlphaSet = true
+                                prefs.edit { putBoolean("is_custom_alpha_set", true) }
+                                prefs.edit { putFloat("card_alpha", newValue) }
+                            },
+                            onValueChangeFinished = {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    saveCardConfig(context)
                                 }
-                            )
-                        }
-                    )
-                }
-                AnimatedVisibility(
-                    visible = ThemeConfig.customBackgroundUri != null && showCardSettings,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-                ){
+                            },
+                            valueRange = 0f..1f,
+                            colors = getSliderColors(cardAlpha, useCustomColors = true),
+                            thumb = {
+                                SliderDefaults.Thumb(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    thumbSize = DpSize(0.dp, 0.dp)
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+            AnimatedVisibility(
+                visible = ThemeConfig.customBackgroundUri != null && showCardSettings,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+            ){
                 ListItem(
                     leadingContent = { Icon(Icons.Filled.DarkMode, null) },
                     headlineContent = { Text(stringResource(R.string.theme_mode)) },
@@ -454,69 +455,69 @@ fun MoreSettingsScreen(navigator: DestinationsNavigator) {
                         showThemeModeDialog = true
                     }
                 )
-                }
+            }
 
-                    // 主题模式选择对话框
-                    if (showThemeModeDialog) {
-                        AlertDialog(
-                            onDismissRequest = { showThemeModeDialog = false },
-                            title = { Text(stringResource(R.string.theme_mode)) },
-                            text = {
-                                Column {
-                                    themeOptions.forEachIndexed { index, option ->
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable {
-                                                    themeMode = index
-                                                    val newThemeMode = when(index) {
-                                                        0 -> null // 跟随系统
-                                                        1 -> false // 浅色
-                                                        2 -> true // 深色
-                                                        else -> null
-                                                    }
-                                                    context.saveThemeMode(newThemeMode)
-                                                    when (index) {
-                                                        2 -> {
-                                                            ThemeConfig.forceDarkMode = true
-                                                            CardConfig.isUserLightModeEnabled = false
-                                                            CardConfig.isUserDarkModeEnabled = true
-                                                            CardConfig.save(context)
-                                                        }
-                                                        1 -> {
-                                                            ThemeConfig.forceDarkMode = false
-                                                            CardConfig.isUserLightModeEnabled = true
-                                                            CardConfig.isUserDarkModeEnabled = false
-                                                            CardConfig.save(context)
-                                                        }
-                                                        0 -> {
-                                                            ThemeConfig.forceDarkMode = null
-                                                            CardConfig.isUserLightModeEnabled = false
-                                                            CardConfig.isUserDarkModeEnabled = false
-                                                            CardConfig.save(context)
-                                                        }
-                                                    }
-                                                    showThemeModeDialog = false
+            // 主题模式选择对话框
+            if (showThemeModeDialog) {
+                AlertDialog(
+                    onDismissRequest = { showThemeModeDialog = false },
+                    title = { Text(stringResource(R.string.theme_mode)) },
+                    text = {
+                        Column {
+                            themeOptions.forEachIndexed { index, option ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            themeMode = index
+                                            val newThemeMode = when(index) {
+                                                0 -> null // 跟随系统
+                                                1 -> false // 浅色
+                                                2 -> true // 深色
+                                                else -> null
+                                            }
+                                            context.saveThemeMode(newThemeMode)
+                                            when (index) {
+                                                2 -> {
+                                                    ThemeConfig.forceDarkMode = true
+                                                    CardConfig.isUserLightModeEnabled = false
+                                                    CardConfig.isUserDarkModeEnabled = true
+                                                    CardConfig.save(context)
                                                 }
-                                                .padding(vertical = 12.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            RadioButton(
-                                                selected = themeMode == index,
-                                                onClick = null
-                                            )
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            Text(option)
+                                                1 -> {
+                                                    ThemeConfig.forceDarkMode = false
+                                                    CardConfig.isUserLightModeEnabled = true
+                                                    CardConfig.isUserDarkModeEnabled = false
+                                                    CardConfig.save(context)
+                                                }
+                                                0 -> {
+                                                    ThemeConfig.forceDarkMode = null
+                                                    CardConfig.isUserLightModeEnabled = false
+                                                    CardConfig.isUserDarkModeEnabled = false
+                                                    CardConfig.save(context)
+                                                }
+                                            }
+                                            showThemeModeDialog = false
                                         }
-                                    }
+                                        .padding(vertical = 12.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    RadioButton(
+                                        selected = themeMode == index,
+                                        onClick = null
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(option)
                                 }
-                            },
-                            confirmButton = {}
-                        )
-                    }
-                }
+                            }
+                        }
+                    },
+                    confirmButton = {}
+                )
             }
         }
+    }
+}
 
 
 @Composable
